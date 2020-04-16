@@ -641,8 +641,7 @@ According to the configuration this bot will:
         if resp.status_code == 200:
             self.persistence.insert_media(media_id=media_id, status="200")
             return True
-        elif resp.status_code == 400 \
-                and resp.text['feedback_title'] == 'Action Blocked':
+        elif resp.status_code == 400 and 'Action Blocked' in str(resp.text):
             self.logger.info(f"Could not like media: id: {media_id}, url: "
                              f"{media_url}, status code: {resp.status_code}. "
                              f"Reason: {resp.text}")
@@ -684,8 +683,7 @@ According to the configuration this bot will:
                 f"Could not unlike media: id: {media_id}, url: {media_url}. It "
                 f"seems this media does not exist anymore.")
             return False
-        elif resp.status_code == 400 \
-                and resp.text['feedback_title'] == 'Action Blocked':
+        elif resp.status_code == 400 and 'Action Blocked' in str(resp.text):
             self.logger.warning(
                 f"Could not unlike media: id: {media_id}, url: {media_url}, "
                 f"status code: {resp.status_code}. Reason: {resp.text}")
@@ -714,8 +712,7 @@ According to the configuration this bot will:
                 f"Comment #{self.comments_counter}: '{comment_text}' on media "
                 f"{media_id}, url: {media_url}")
             return True
-        elif resp.status_code == 400 \
-                and resp.text['feedback_title'] == 'Action Blocked':
+        elif resp.status_code == 400 and 'Action Blocked' in str(resp.text):
             self.logger.warning(
                 f"Could not comment media: id: {media_id}, url: {media_url}, "
                 f"status code: {resp.status_code}. Reason: {resp.text}")
@@ -747,8 +744,7 @@ According to the configuration this bot will:
                 self.persistence.insert_username(user_id=user_id,
                                                  username=username)
                 return resp
-            elif resp.status_code == 400 \
-                    and resp.text['feedback_title'] == 'Action Blocked':
+            elif resp.status_code == 400 and 'Action Blocked' in str(resp.text):
                 self.logger.warning(
                     f"Could not follow user: username: {username}, url: "
                     f"{self.url_user(username)}, status code: "
@@ -776,8 +772,7 @@ According to the configuration this bot will:
                 f"Unfollowed user #{self.unfollow_counter}: username: "
                 f"{username}, url: {self.url_user(username)}")
             return True
-        elif resp.status_code == 400 \
-                and resp.text['feedback_title'] == 'Action Blocked':
+        elif resp.status_code == 400 and 'Action Blocked' in str(resp.text):
             self.logger.warning(
                 f"Could not unfollow user: username: {username}, url: "
                 f"{self.url_user(username)}, status code: "
